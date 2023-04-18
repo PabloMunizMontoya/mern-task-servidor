@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/PabloMunizMontoya/mern-task-servidor/issues"
   },
-  "homepage": "https://github.com/PabloMunizMontoya/mern-task-servidor#readme"
+  "homepage": "https://github.com/PabloMunizMontoya/mern-task-servidor#readme",
+  "dependencies": {
+    "dot": "^1.1.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4",
+    "nodemon": "^2.0.22",
+    "redux": "^4.2.1"
+  }
 }
