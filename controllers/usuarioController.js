@@ -4,9 +4,21 @@ const Usuario = require('../models/User.js')
 //15 importamos bcrypt para hachear los passwords de los usuarios
 const bcryptjs = require('bcryptjs')
 
-// 9 generamos una function para el controlador como estamos trabajando con redux ponemos  el req res.
+//16. importamos los resultado de la validación
+const { validationResult } = require('express-validator')
+const { ErrorResponse } = require('@remix-run/router')
 
+// 9 generamos una function para el controlador como estamos trabajando con redux ponemos  el req res.
 exports.crearUsuario = async (req, res ) =>{
+
+
+    //16.1 revisamos si hay errores, la function importada desde express validator tiene como param el request, con este param analiza si hay errores y lo genera como un array
+    const errores = validationResult(req)
+
+    //16.2 si errores no esta vació, quiere decir que no hay errores
+    if(!errores.isEmpty()){
+        return res.status(400).json({errores: errores.array()})
+    }
 
 
     //13 extraemos las propiedades del body con array destructuring 
