@@ -7,6 +7,10 @@ const app = express()
 //6. conectamos la db
 conectarDB()
 
+//9. Habilitar express.json, esto nos permite leer datos que el usurario coloque. al poner esto tenemos que enviar el header en postman como application/json para ello abrimos el postman ponemos la ruta en este caso es http://localhost:4000/api/usuarios y en headers ponemos en el key : content-type y en el value le ponemos application/json, luego vamos a body elegimos raw y nos disponemos a llenar la info en formato json, esto quiere decir que le vamos a enviar por body un formato json
+app.use(express.json({extended: true}))
+
+
 //2.creamos el puerto, entonces si no existe el servidor en la variable de entorno se le asigna el 4000
 const PORT = process.env.PORT || 4000
 
