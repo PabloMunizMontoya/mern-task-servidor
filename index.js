@@ -23,6 +23,9 @@ app.get('/', (req, res) => {
 //8. importamos todas nuestras rutas
 app.use('/api/usuarios', require('./routes/usuarios'))
 
+//18. importamos la ruta para auth
+app.use('/api/auth', require('./routes/auth'))
+
 // 3. arrancar la app
 app.listen(PORT, () => {
     console.log(`El servidor esta funcionando en el puerto ${PORT}`)

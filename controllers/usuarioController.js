@@ -55,7 +55,7 @@ exports.crearUsuario = async (req, res ) =>{
         //crear token, le damos al payload el valor del id del usuario.
         const payload = {
             usuario : {
-                id: usuario.id
+                id: usuario._id
             }
         }
 
@@ -64,10 +64,10 @@ exports.crearUsuario = async (req, res ) =>{
             //esta parte es la configuración, nos dice que el token expira en una hora 
             expiresIn: 3600
 
-        },  //esto es el callback para mostrar  el error
+        },  //esto es el callback para mostrar  el error o el token
             (error, token) => {
                 if(error) throw error
-                res.json({ token })
+                res.json({ token, msg: 'Usuario creado correctamente' })
             })
 
         /* //12.3 mensaje de confirmación
