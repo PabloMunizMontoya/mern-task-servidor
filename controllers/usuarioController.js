@@ -4,9 +4,11 @@ const Usuario = require('../models/User.js')
 //15 importamos bcrypt para hachear los passwords de los usuarios
 const bcryptjs = require('bcryptjs')
 
-//16. importamos los resultado de la validación
+//16. importamos los resultados de la validación
 const { validationResult } = require('express-validator')
-const { ErrorResponse } = require('@remix-run/router')
+
+//17 importamos jwt para hacer la validación del usuario
+const jwt = require('jsonwebtoken')
 
 // 9 generamos una function para el controlador como estamos trabajando con redux ponemos  el req res.
 exports.crearUsuario = async (req, res ) =>{
@@ -15,7 +17,7 @@ exports.crearUsuario = async (req, res ) =>{
     //16.1 revisamos si hay errores, la function importada desde express validator tiene como param el request, con este param analiza si hay errores y lo genera como un array
     const errores = validationResult(req)
 
-    //16.2 si errores no esta vació, quiere decir que no hay errores
+    //16.2 si errores no esta vació, quiere decir que no hay errores, si esta lleno entonces retornamos un response con el array de lso errores.
     if(!errores.isEmpty()){
         return res.status(400).json({errores: errores.array()})
     }
@@ -49,8 +51,29 @@ exports.crearUsuario = async (req, res ) =>{
         //12.2 guardamos el usuario
         await usuario.save()
 
-        //12.3 mensaje de confirmación
-        res.json({ msg: 'Usuario creado correctamente'})
+        //17.1 después de guardar el usuario usamos el jwt: crear y firmar el JWT
+        //crear token, le damos al payload el valor del id del usuario.
+        const payload = {
+            usuario : {
+                id: usuario.id
+            }
+        }
+
+        //firmar token
+        jwt.sign(payload, process.env.SECRETA, {
+            //esta parte es la configuración, nos dice que el token expira en una hora 
+            expiresIn: 3600
+
+        },  //esto es el callback para mostrar  el error
+            (error, token) => {
+                if(error) throw error
+                res.json({ token })
+            })
+
+        /* //12.3 mensaje de confirmación
+        res.json({ msg: 'Usuario creado correctamente' })
+        res.token */
+        
 
     } catch (error) {
 
