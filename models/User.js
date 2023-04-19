@@ -16,9 +16,13 @@ const UsuarioSchema = mongoose.Schema({
         unique: true
     },
     password: {
-
+        type: String,
+        required: true,
+        trim: true
     },
     registro: {
+        type: Date,
+        default: Date.now()
 
     }
 })
