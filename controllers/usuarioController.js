@@ -55,7 +55,7 @@ exports.crearUsuario = async (req, res ) =>{
         //crear token, le damos al payload el valor del id del usuario.
         const payload = {
             usuario : {
-                id: usuario._id
+                id: usuario.id
             }
         }
 
