@@ -10,7 +10,7 @@ const { validationResult } = require('express-validator')
 //17 importamos jwt para hacer la validación del usuario
 const jwt = require('jsonwebtoken')
 
-// 9 generamos una function para el controlador como estamos trabajando con redux ponemos  el req res.
+// 9 generamos una function para el controlador como estamos trabajando con express ponemos  el req res.
 exports.crearUsuario = async (req, res ) =>{
 
 

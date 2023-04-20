@@ -26,6 +26,9 @@ app.use('/api/usuarios', require('./routes/usuarios'))
 //18. importamos la ruta para auth
 app.use('/api/auth', require('./routes/auth'))
 
+//35 importamos la ruta para proyectos
+app.use('/api/proyectos', require('./routes/proyectos'))
+
 // 3. arrancar la app
 app.listen(PORT, () => {
     console.log(`El servidor esta funcionando en el puerto ${PORT}`)
