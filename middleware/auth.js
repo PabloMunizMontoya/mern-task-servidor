@@ -23,7 +23,6 @@ module.exports = function (req,res,next){
         
         // una vez verificado como parte del request agregamos el usuario, entendamos que cifrado contiene el nombre del usuario y el id es por esto que desde cifrado que es la verificación del token, es decir desde el token podemos extraer el nombre y el id del usuario
         req.usuario = cifrado.usuario
-        console.log(req.usuario)
         
         // finalmente le damos next para que valla al siguiente middleware
         next()

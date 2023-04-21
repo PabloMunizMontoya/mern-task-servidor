@@ -26,17 +26,17 @@ router.post('/',
 
 )
 
-/* //43. creamos una petición get para traer los proyectos
+ //43. creamos una petición get para traer los proyectos
 router.get('/', 
 
-    //44.usamos el middleware auth para verificar que el usuario este autentificado, de esta forma puede crear un nuevo proyecto, el middleware es algo que esta antes  de la petición post.
+    //44.usamos el middleware auth para verificar que el usuario este autentificado, de esta forma solo el usuario autenticado puede ver sus proyectos
     auth,
     
-    //38. ponemos el controlador en la ruta y luego le decimos con que método operara ese controlador, si vemos en el controlador la funcionalidad del mismo viene exports.crearProyecto.
-    proyectoController.crearProyecto 
+    //38. ponemos el controlador en la ruta y luego le decimos con que método operara ese controlador, si vemos en el controlador la funcionalidad del mismo viene exports.obtenerProyectos.
+    proyectoController.obtenerProyectos 
 
 )
- */
+
 
 
 

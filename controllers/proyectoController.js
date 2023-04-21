@@ -17,7 +17,7 @@ exports.crearProyecto =async (req,res) => {
 
     //46.2 si errores no esta vació, quiere decir que no hay errores, si esta lleno entonces retornamos un response con el array de los errores.
     if(!errores.isEmpty()){
-        
+
         //El código de estado HTTP 400, también conocido como "Bad Request" (solicitud incorrecta), se utiliza para indicar que el servidor no puede procesar la solicitud del cliente debido a un problema con la solicitud misma.
         return res.status(400).json({errores: errores.array()})
     }
@@ -38,6 +38,24 @@ exports.crearProyecto =async (req,res) => {
 
         console.log(error)
         //39.1 status 500 se refiere a un error en el servidor
+        res.status(500).send('Hubo un error')
+    }
+}
+
+//47 creamos otra instancia del controlador para obtener los proyectos del usuario actual.
+exports.obtenerProyectos = async(req,res) =>{
+
+    //47.1 usamos un try catch para poder ver en consola el error en caso de que halla uno.
+    try {
+
+        //47.2 si recordamos bien y vemos en rutas para este get primero introducimos el auth, en el auth le dimos al usuario un valor(su id) entonces esa información ahora la podemos consumir aquí.
+        //por lo tanto para obtener sus proyectos vamos a usar el modelo de proyectos y con un método de mongoose vamos a encontrar todos los proyectos que contengan el id del creador, luego mostramos con un res.json los proyectos encontrados bajo esta petición 
+        const proyectos = await Proyecto.find({creador: req.usuario.id})
+        res.json({proyectos})
+        console.log(req.usuario)
+    } catch (error) {
+        console.log(error)
+        //En resumen, el código de estado 500 se utiliza para indicar que ha habido un error en el servidor que ha impedido que se procese la solicitud del cliente, mientras que el código de estado 400 se utiliza para indicar que la solicitud del cliente no ha pasado la validación y no se puede procesar.
         res.status(500).send('Hubo un error')
     }
 }
