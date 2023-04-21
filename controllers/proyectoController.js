@@ -2,10 +2,25 @@
 
 //40 tenemos que importar el modelo de proyecto para que el controlador use sus datos
 const Proyecto = require('../models/Proyecto')
-const proyecto = require('../models/Proyecto')
+//46 tenemos que ingresar en el controlador la validación dada por express validator en la ruta, para esto usamos esta dependencia de esta biblioteca que nos vaa mostrar el resultado de la validación
+const {validationResult} = require('express-validator')
+
 
 //37 creamos el controlador,  req y res, que son los objetos de solicitud y respuesta proporcionados por Express para manejar las solicitudes HTTP.
 exports.crearProyecto =async (req,res) => {
+
+    //46.1 usamos validationResult en el controlador
+    // validationResult es una función proporcionada por la biblioteca express-validator que se utiliza para validar y verificar si se han cumplido las reglas de validación definidas para los campos de entrada de una solicitud HTTP.
+
+    //La función validationResult toma como argumento la solicitud (req) y devuelve un objeto errors que contiene los errores de validación que se han producido durante la verificación de las reglas de validación definidas para los campos de entrada.
+    const errores = validationResult(req)
+
+    //46.2 si errores no esta vació, quiere decir que no hay errores, si esta lleno entonces retornamos un response con el array de los errores.
+    if(!errores.isEmpty()){
+        
+        //El código de estado HTTP 400, también conocido como "Bad Request" (solicitud incorrecta), se utiliza para indicar que el servidor no puede procesar la solicitud del cliente debido a un problema con la solicitud misma.
+        return res.status(400).json({errores: errores.array()})
+    }
 
     //39. cuando estamos usando function asíncronas es recomendado usar el try catch, para poder observar el error u operar si es que todo va bien. 
     try {
