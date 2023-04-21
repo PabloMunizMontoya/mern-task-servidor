@@ -37,6 +37,21 @@ router.get('/',
 
 )
 
+//49 creamos la ruta para actualizar un proyecto usamos esta  vez el método put, para esto en la ruta debemos tener el id/ via id
+router.put('/:id', 
+
+    //49.1 usamos el middleware auth para verificar que el usuario este autentificado, de esta forma solo el usuario autenticado puede actualizar sus proyectos
+    auth,
+
+    //49.2 validamos que el proyecto tenga un nombre
+    [
+        check('nombre', 'El nombre del proyecto es obligatorio' ).not().isEmpty()
+    ], 
+    
+    //49.3. ponemos el controlador en la ruta y luego le decimos con que método operara ese controlador, si vemos en el controlador la funcionalidad del mismo viene exports.actualizarProyecto
+    proyectoController.actualizarProyecto
+
+)
 
 
 

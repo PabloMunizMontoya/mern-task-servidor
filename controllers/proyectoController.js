@@ -49,8 +49,9 @@ exports.obtenerProyectos = async(req,res) =>{
     try {
 
         //47.2 si recordamos bien y vemos en rutas para este get primero introducimos el auth, en el auth le dimos al usuario un valor(su id) entonces esa información ahora la podemos consumir aquí.
-        //por lo tanto para obtener sus proyectos vamos a usar el modelo de proyectos y con un método de mongoose vamos a encontrar todos los proyectos que contengan el id del creador, luego mostramos con un res.json los proyectos encontrados bajo esta petición 
-        const proyectos = await Proyecto.find({creador: req.usuario.id})
+        //por lo tanto para obtener sus proyectos vamos a usar el modelo de proyectos y con un método de mongoose vamos a encontrar todos los proyectos que contengan el id del creador, luego mostramos con un res.json los proyectos encontrados bajo esta petición.
+        //luego queremos mostrar los proyectos mostrando primero el ultimo creado usamos el sort y el valor de creado dentro del proyecto 
+        const proyectos = await Proyecto.find({creador: req.usuario.id}).sort({creado: -1})
         res.json({proyectos})
         console.log(req.usuario)
     } catch (error) {
@@ -58,4 +59,35 @@ exports.obtenerProyectos = async(req,res) =>{
         //En resumen, el código de estado 500 se utiliza para indicar que ha habido un error en el servidor que ha impedido que se procese la solicitud del cliente, mientras que el código de estado 400 se utiliza para indicar que la solicitud del cliente no ha pasado la validación y no se puede procesar.
         res.status(500).send('Hubo un error')
     }
+}
+
+//48 creamos el controlador para actualizar un proyecto
+exports.actualizarProyecto = async(req,res) =>{
+
+    //48.1 validamos
+    const errores = validationResult(req)
+
+    //48.2 si errores no esta vació, quiere decir que no hay errores, si esta lleno entonces retornamos un response con el array de los errores.
+    if(!errores.isEmpty()){
+
+        //El código de estado HTTP 400, también conocido como "Bad Request" (solicitud incorrecta), se utiliza para indicar que el servidor no puede procesar la solicitud del cliente debido a un problema con la solicitud misma.
+        return res.status(400).json({errores: errores.array()})
+    }
+
+    // 48.3 extraemos la info de proyecto, el nombre viene por el request del body y lo que queremos es mostrar el nuevo proyecto
+    const {nombre} = req.body
+    const nuevoProyecto = {}
+
+    // 48.4 tenemos que revisar cada entrada por individual, en este caso lo que se puede modificar del proyecto es el nombre, entonces si nombre tiene algo le damos al nuevo proyecto ese nombre
+    if (nombre){
+        nuevoProyecto.nombre = nombre
+    }
+
+    try {
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Error en el servidor ')
+    }
+
 }
