@@ -46,7 +46,7 @@ router.put('/:id',
     //49.2 validamos que el proyecto tenga un nombre
     [
         check('nombre', 'El nombre del proyecto es obligatorio' ).not().isEmpty()
-    ], 
+    ],
     
     //49.3. ponemos el controlador en la ruta y luego le decimos con que método operara ese controlador, si vemos en el controlador la funcionalidad del mismo viene exports.actualizarProyecto
     proyectoController.actualizarProyecto

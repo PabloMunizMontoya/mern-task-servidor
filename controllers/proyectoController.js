@@ -84,7 +84,26 @@ exports.actualizarProyecto = async(req,res) =>{
     }
 
     try {
-        
+
+        //48.5 queremos traer primero el proyecto por su id, Proyecto es el modelo y dentro del modelo revisamos un id, el id esta en los params, con esto revisamos el id.
+        let proyecto = await Proyecto.findById(req.params.id)
+
+        //48.6 revisamos si el proyecto existe o no, si proyecto no existe se muestra el mensaje de error. 
+        if(!proyecto){
+            return res.status(404).json({msg:'Proyecto no encontrado'})
+        }
+
+        //48.7 verificamos que el creador del proyecto se el que hace el llamado de modificación, creador es una propiedad de cada proyecto que tiene el id de su creador. el to string es para convertir el object id e un string
+        if(proyecto.creador.toString() !== req.usuario.id){
+            return res.status(401).json({msg: 'No Autorizado'})
+        }
+
+        //48.8 finalmente actualizamos, le decimos que va a actualizar el contenido de ese id, luego le decimos con que lo va a actualizar
+        proyecto = await Proyecto.findByIdAndUpdate(req.params.id, nuevoProyecto, {new: true})
+
+        res.json({proyecto})
+
+
     } catch (error) {
         console.log(error)
         res.status(500).send('Error en el servidor ')
