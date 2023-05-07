@@ -29,6 +29,9 @@ app.use('/api/auth', require('./routes/auth'))
 //35 importamos la ruta para proyectos
 app.use('/api/proyectos', require('./routes/proyectos'))
 
+//54.0 agregamos el routing de las tareas
+app.use('/api/tareas', require('./routes/tareas'))
+
 // 3. arrancar la app
 app.listen(PORT, () => {
     console.log(`El servidor esta funcionando en el puerto ${PORT}`)
