@@ -53,6 +53,16 @@ router.put('/:id',
 
 )
 
+router.delete('/:id', 
+
+    //50 usamos el middleware auth para verificar que el usuario este autentificado, de esta forma solo el usuario autenticado puede actualizar sus proyectos
+    auth,
+    
+    //50.1 ponemos el controlador en la ruta y luego le decimos con que método operara ese controlador, si vemos en el controlador la funcionalidad del mismo viene exports.eliminarProyecto
+    proyectoController.eliminarProyecto
+
+)
+
 
 
 module.exports = router
