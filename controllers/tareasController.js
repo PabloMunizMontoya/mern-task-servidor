@@ -59,3 +59,36 @@ exports.crearTarea = async (req, res) => {
         res.status(500).send('Hubo un error')
     }
 }
+
+//57.1 obtiene las tareas del proyecto indicado
+exports.obtenerTareas = async (req, res) => {
+
+    try {
+        //57.2 extraer el proyecto y comprobar si existe, necesitamos el id del proyecto para compararlo y hacer comprobaciones, el proyecto lo obtenemos por body.
+
+        //req es un objeto que representa la solicitud que se ha enviado al servidor. Este objeto contiene información sobre la solicitud, como las cabeceras, la URL solicitada, el método HTTP utilizado (por ejemplo, GET o POST), y cualquier dato enviado en el cuerpo de la solicitud.
+
+        //req.body es una propiedad de req que contiene los datos enviados en el cuerpo de la solicitud, si los hay. En este caso, parece que se espera que los datos estén en formato JSON.
+        const {proyecto} = req.body
+
+        //57.3 validamos si el proyecto existe usando el id que traemos por req.body y el id de algún proyecto dentro de el modelo Proyecto
+        const existeProyecto = await Proyecto.findById(proyecto)
+
+        if(!existeProyecto){
+            return res.status(404).json({msg: 'Proyecto no encontrado'})
+        }
+
+        //57.4 revisar si el proyecto actual pertenece al usuario autentificado
+        if(existeProyecto.creador.toString() !== req.usuario.id ) {
+            return res.status(401).json({msg: 'No Autorizado'})
+        }
+
+        //57.5 obtener las tareas por proyecto, vaa buscar las tareas en el proyecto que pasamos mas arriba por req.body
+        const tareas = await Tarea.find
+        ({proyecto})
+        res.json({ tareas })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Hubo un error')
+    }
+}

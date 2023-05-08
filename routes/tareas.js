@@ -23,4 +23,10 @@ router.post('/',
     tareasController.crearTarea
 )
 
+//57. petición para obtener las tareas por proyecto
+router.get('/',
+    auth,
+    tareasController.obtenerTareas
+)
+
 module.exports = router
