@@ -12,7 +12,7 @@ const TareaSchema = mongoose.Schema({
     },
     estado: {
         type: Boolean,
-        required: true
+        default: false
     }, 
     creado: {
         type: Date,
