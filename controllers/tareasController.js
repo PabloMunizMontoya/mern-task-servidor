@@ -92,3 +92,54 @@ exports.obtenerTareas = async (req, res) => {
         res.status(500).send('Hubo un error')
     }
 }
+
+//59.1 controlador para actualizar tareas
+exports.actualizarTareas = async (req, res) => {
+    try {
+
+        //59.2 extraemos los datos que necesitamos
+        const {proyecto, nombre, estado} = req.body
+
+        //59.3 revisamos si la tarea existe
+        const tareaExiste = await Tarea.findById(req.params.id)
+
+        if(!tareaExiste) {
+            return res.status(404).json({msg: 'No existe esa tarea'})
+        }
+
+        //59.4 comprobamos que proyecto si exista
+        const existeProyecto = await Proyecto.findById(proyecto)
+
+        //59.4 validamos
+        if(!existeProyecto){
+            return res.status(404).json({msg: 'Proyecto no encontrado'})
+        }
+        
+        //59.5 si el creador del proyecto no es quien quiere modificar 
+        if(existeProyecto.creador.toString() !== req.usuario.id ) {
+            return res.status(401).json({msg: 'No Autorizado'})
+        }
+
+        //59.6 creamos un objeto con la nueva información
+        const nuevaTarea = {}
+
+        //59.6.1 si el usuario cambia el nombre
+        if(nombre) {
+            nuevaTarea.nombre = nombre
+        }
+
+        //59.6.2 si el usuario cambia el estado
+        if(estado) {
+            nuevaTarea.estado = estado
+        }
+        
+        //59.7 guardamos la tarea nueva 
+        tarea = await Tarea.findOneAndUpdate({_id : req.params.id}, nuevaTarea, {new:true})
+
+        res.json({ tarea })
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).send('Hubo un error')
+    }
+}
