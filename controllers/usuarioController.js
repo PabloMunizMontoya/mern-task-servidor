@@ -67,6 +67,7 @@ exports.crearUsuario = async (req, res ) =>{
         },  //esto es el callback para mostrar  el error o el token
             (error, token) => {
                 if(error) throw error
+                
                 res.json({ token, msg: 'Usuario creado correctamente' })
             })
 
