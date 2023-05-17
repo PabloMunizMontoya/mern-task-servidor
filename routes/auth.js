@@ -12,12 +12,6 @@ const auth =require('../middleware/auth')
 //iniciamos session
  router.post('/', 
 
-    //21.1 agregamos las reglas de validación, para iniciar sección lo único que requerimos es e mail y password
-    [
-        check('email','Agrega un email valido').isEmail(),
-        check('password', 'El password debe ser mínimo de 8 caracteres').isLength({ min:8})
-        
-    ],
     //26.1 agregamos el controlador a la ruta autenticarUsuario viene del controlador (exports.autenticarUsuario)
     authController.autenticarUsuario
 )
