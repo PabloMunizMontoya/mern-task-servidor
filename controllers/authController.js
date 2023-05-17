@@ -42,7 +42,7 @@ const jwt = require('jsonwebtoken')
          //27.2 si todo es correcto creamos el jwt 
         const payload = {
             usuario : {
-                id: usuario._id
+                id: usuario.id
             }
         }
 
@@ -54,11 +54,14 @@ const jwt = require('jsonwebtoken')
         },  //esto es el callback para mostrar  el error o el token
             (error, token) => {
                 if(error) throw error
+
+                //cuando un usuario accede correctamente enviamos el token
                 res.json({ token, msg: 'Usuario logeado correctamente' })
             }) 
 
     } catch (error) {
         console.log(error)
+        res.status(400).send('hubo un error')
     }
 }  
 
