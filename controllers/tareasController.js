@@ -69,8 +69,8 @@ exports.obtenerTareas = async (req, res) => {
         //req es un objeto que representa la solicitud que se ha enviado al servidor. Este objeto contiene información sobre la solicitud, como las cabeceras, la URL solicitada, el método HTTP utilizado (por ejemplo, GET o POST), y cualquier dato enviado en el cuerpo de la solicitud.
 
         //req.body es una propiedad de req que contiene los datos enviados en el cuerpo de la solicitud, si los hay. En este caso, parece que se espera que los datos estén en formato JSON.
-        const {proyecto} = req.body
-
+        const {proyecto} = req.query
+        console.log(proyecto)
         //57.3 validamos si el proyecto existe usando el id que traemos por req.body y el id de algún proyecto dentro de el modelo Proyecto
         const existeProyecto = await Proyecto.findById(proyecto)
 
@@ -85,7 +85,7 @@ exports.obtenerTareas = async (req, res) => {
 
         //57.5 obtener las tareas por proyecto, vaa buscar las tareas en el proyecto que pasamos mas arriba por req.body
         const tareas = await Tarea.find
-        ({proyecto})
+        ({proyecto}).sort({ creado: -1})
         res.json({ tareas })
     } catch (error) {
         console.log(error)
@@ -150,7 +150,7 @@ exports.eliminarTareas = async (req, res) => {
 
         //60.2 extraemos los datos que necesitamos, enviamos proyecto por que proyecto tiene la persona que lo creo
         const {proyecto} = req.body
-
+        
         //60.3 revisamos si la tarea existe
         const tareaExiste = await Tarea.findById(req.params.id)
 
