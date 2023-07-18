@@ -149,7 +149,7 @@ exports.eliminarTareas = async (req, res) => {
     try {
 
         //60.2 extraemos los datos que necesitamos, enviamos proyecto por que proyecto tiene la persona que lo creo
-        const {proyecto} = req.body
+        const {proyecto} = req.query
         
         //60.3 revisamos si la tarea existe
         const tareaExiste = await Tarea.findById(req.params.id)
