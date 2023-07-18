@@ -124,12 +124,12 @@ exports.actualizarTareas = async (req, res) => {
         const nuevaTarea = {}
 
         //59.6.1 si el usuario cambia el nombre
-        if(nombre) {
+        {
             nuevaTarea.nombre = nombre
         }
 
         //59.6.2 si el usuario cambia el estado
-        if(estado) {
+        {
             nuevaTarea.estado = estado
         }
         
